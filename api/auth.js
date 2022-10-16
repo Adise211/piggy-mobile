@@ -12,6 +12,7 @@ export const createUser = async (email, password, fullName) => {
                 returnSecureToken: true
             }
         );
+        console.log(response.data);
         return response;
 
     } catch (error) {

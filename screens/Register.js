@@ -4,6 +4,7 @@ import PrimaryButton from '../UI/PrimaryButton';
 import { useNavigation } from '@react-navigation/native';
 import { createUser } from '../api/auth';
 import { useState } from 'react';
+import WelcomeNewUser from '../components/WelcomeNewUser';
 
 
 
@@ -17,10 +18,10 @@ const Register = () => {
         field: '',
         message: ''
     });
-    const [emptyInput, setEmptyInput] = useState('');
     const [isLodaing, setIsLodaing] = useState(false);
     const [authenticated, setAuthenticated] = useState(false);
     const [authMessage, setAuthMessage] = useState('');
+    const [user, setUser] = useState([]);
 
     const backToSignIn = () => {
         navigation.replace('SIGN-IN')
@@ -37,95 +38,106 @@ const Register = () => {
         if (!validFullName) setNotValidMessage({field:'fullName',message: 'Please make sure your full name is correct!'})
 
         if (validEmail && validPassword && validFullName) {
-            // setIsLodaing(true);
+            setIsLodaing(true);
             setNotValidMessage({field: '', message: ''});
-            // await createUser(email, password, fullName);
-            // setIsLodaing(false);
-            // setAuthenticated(true);
-            setAuthMessage('Created new user')
+
+            const {data} = await createUser(email, password, fullName);
+            console.log("data from front", data);
+            setIsLodaing(false);
+            setAuthenticated(true);
+            setAuthMessage('Created new user');
+            setUser(data.email)
         }
         
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.inputsContainer}>
-                <Text>Full Name</Text>
-                <TextInput 
-                    label= 'userNickName'
-                    style={[ 
-                        styles.input, 
-                        notValidMessage.field === 'fullName'? styles.notValidBorder : styles.back
-                    ]} 
-                    autoCorrect= {false}
-                    onChangeText= {(enterdValue) => setFullName(enterdValue)}  
-                    value={fullName}
-                />
-                <Text>Email</Text>
-                <TextInput 
-                    label= 'userEmail'
-                    style={[ 
-                        styles.input, 
-                        notValidMessage.field === 'email'? styles.notValidBorder : styles.back
-                    ]} 
-                    keyboardType='email-address'
-                    placeholder='Example@something.com'
-                    autoComplete= 'email'
-                    autoCapitalize= 'none'
-                    autoCorrect= {false}
-                    onChangeText= {(enterdValue) => setEmail(enterdValue)}
-                    value={email}
-                />
-                <Text>Password</Text>
-                <TextInput 
-                    label= 'userPassword'
-                    style={[ 
-                        styles.input, 
-                        notValidMessage.field === 'password'? styles.notValidBorder : styles.back
-                    ]} 
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    onChangeText= {(enterdValue) => setPassword(enterdValue)}
-                    value={password}
-                />
+        <View>
+            {!user ? (
+                <>
+                <View style={styles.formContainer}>
+                  <View style={styles.inputsContainer}>
+                    <Text>Full Name</Text>
+                    <TextInput 
+                        label= 'userNickName'
+                        style={[ 
+                            styles.input, 
+                            notValidMessage.field === 'fullName'? styles.notValidBorder : styles.back
+                        ]} 
+                        autoCorrect= {false}
+                        onChangeText= {(enterdValue) => setFullName(enterdValue)}  
+                        value={fullName}
+                    />
+                    <Text>Email</Text>
+                    <TextInput 
+                        label= 'userEmail'
+                        style={[ 
+                            styles.input, 
+                            notValidMessage.field === 'email'? styles.notValidBorder : styles.back
+                        ]} 
+                        keyboardType='email-address'
+                        placeholder='Example@something.com'
+                        autoComplete= 'email'
+                        autoCapitalize= 'none'
+                        autoCorrect= {false}
+                        onChangeText= {(enterdValue) => setEmail(enterdValue)}
+                        value={email}
+                    />
+                    <Text>Password</Text>
+                    <TextInput 
+                        label= 'userPassword'
+                        style={[ 
+                            styles.input, 
+                            notValidMessage.field === 'password'? styles.notValidBorder : styles.back
+                        ]} 
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        secureTextEntry={true}
+                        onChangeText= {(enterdValue) => setPassword(enterdValue)}
+                        value={password}
+                    />
+                    
+                    <View style={styles.button}>
+                    <PrimaryButton 
+                        coverColor={COLORS.BLUE_500} 
+                        borderColor={COLORS.BLUE_500}
+                        onPress={createNewUserHandler} 
+                    >
+                        Register
+                    </PrimaryButton>
+                    </View>
+
+                    <View>
+                    <Pressable onPress={backToSignIn} style={({ pressed }) => pressed ? styles.pressed : null}>
+                        <Text style={styles.signin}>Sign In</Text>
+                    </Pressable>
+                    </View>
+
+                    <Text style={{color: 'red', marginTop: 5, textAlign: 'center'}}>{notValidMessage.message}</Text>
+                    {/* <Text 
+                        style={{
+                            color: 'red', 
+                            marginTop: 5, 
+                            textAlign: 'center',
+                            position: 'relative',
+                            
+                        }}
+                    >
+                            {emptyInput}
+                    </Text> */}
+                    </View>
+                 </View>
+                 </>
+                ) : (
+                    <WelcomeNewUser />
+                )}
                 
-                <View style={styles.button}>
-                <PrimaryButton 
-                    coverColor={COLORS.BLUE_500} 
-                    borderColor={COLORS.BLUE_500}
-                    onPress={createNewUserHandler} 
-                >
-                    Register
-                </PrimaryButton>
-                </View>
-
-                <View>
-                <Pressable onPress={backToSignIn} style={({ pressed }) => pressed ? styles.pressed : null}>
-                    <Text style={styles.signin}>Sign In</Text>
-                </Pressable>
-                </View>
-
-                <Text style={{color: 'red', marginTop: 5, textAlign: 'center'}}>{notValidMessage.message}</Text>
-                {/* <Text 
-                    style={{
-                        color: 'red', 
-                        marginTop: 5, 
-                        textAlign: 'center',
-                        position: 'relative',
-                        
-                    }}
-                >
-                        {emptyInput}
-                </Text> */}
-                <Text style={{color:'green'}}>{authMessage}</Text>
-            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    formContainer: {
         marginTop: 70,
         // padding: 16,
         marginHorizontal: 20,
@@ -138,7 +150,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 420
     },
-
     inputsContainer: {
         flexDirection: 'column',
     },
@@ -181,6 +192,7 @@ const styles = StyleSheet.create({
         marginLeft: 70,
         
     }
+
 })
 
 export default Register;
