@@ -11,7 +11,7 @@ const SignIn = () => {
     };
 
     const registerButtonHandler = () =>{
-        navigation.navigate('REGISTER')
+        navigation.replace('REGISTER')
     }
 
     return (
@@ -36,7 +36,13 @@ const SignIn = () => {
                 />
             </View>
             <View>
-                <PrimaryButton onPress={signinPressHandler} coverColor={COLORS.primary_pink} borderColor= {COLORS.primary_pink}>Sign In</PrimaryButton>
+                <PrimaryButton 
+                    onPress={signinPressHandler} 
+                    coverColor={COLORS.primary_pink} 
+                    borderColor= {COLORS.primary_pink}
+                >
+                    Sign In
+                </PrimaryButton>
                 <Pressable onPress={registerButtonHandler} style={({ pressed }) => pressed ? styles.pressed : null}>
                     <Text style={styles.register}>Register</Text>
                 </Pressable>

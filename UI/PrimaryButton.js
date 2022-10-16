@@ -7,7 +7,7 @@ import { COLORS } from "../components/constants";
 const PrimaryButton = ({ children, onPress, coverColor, borderColor }) => {
 
     return (
-        <Pressable onPress={onPress}>
+        <Pressable onPress={onPress} style={({pressed}) => pressed? styles.pressed : null}>
             <View style={[styles.button, {backgroundColor: coverColor, borderColor:borderColor }]}>
                 <Text style={styles.label}>{children}</Text>
             </View>
@@ -24,7 +24,11 @@ const styles = StyleSheet.create({
     label: {
         fontWeight: '600',
         fontSize: 16,
-        color: COLORS.white
+        color: COLORS.white,
+        textAlign: 'center'
+    },
+    pressed: {
+        opacity: 0.85
     }
 })
 
