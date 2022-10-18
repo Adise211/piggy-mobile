@@ -1,13 +1,31 @@
-import { View, StyleSheet, TextInput, Text, Pressable } from 'react-native';
+import { View, StyleSheet, TextInput, Text, Pressable, Alert } from 'react-native';
+import { useState, useContext } from 'react';
 import { COLORS } from '../components/constants';
 import PrimaryButton from '../UI/PrimaryButton';
 import { useNavigation } from '@react-navigation/native';
+import { signInUser } from '../api/auth';
+import { AuthContext } from '../store/authContext';
 
 const SignIn = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigation = useNavigation();
+    const authCtx = useContext(AuthContext);
 
-    const signinPressHandler = () => {
-        console.log('You pressed me!');
+
+    const signinPressHandler = async () => {
+        try {
+            // TO DO : Invalid email / wrong password message
+            const { data }  = await signInUser(email, password);
+            authCtx.authenticate(data.idToken);
+            console.log("mmmm", data.idToken);
+
+            data ? navigation.replace('Mypage') : console.log("front error", error);
+
+        } catch (error) {
+            Alert.alert('User Not Exist', 'Please check your password or email and try again later.')
+            console.log("The error",error);
+        }
     };
 
     const registerButtonHandler = () =>{
@@ -25,6 +43,7 @@ const SignIn = () => {
                     autoComplete='email'
                     autoCapitalize='none'
                     autoCorrect={false}
+                    onChangeText={(enterdValue) => setEmail(enterdValue)}
                 />
                 <Text>Password</Text>
                 <TextInput 
@@ -32,7 +51,7 @@ const SignIn = () => {
                     autoCapitalize='none'
                     autoCorrect={false}
                     secureTextEntry={true}
-
+                    onChangeText={(enterdValue) => setPassword(enterdValue)}
                 />
             </View>
             <View>

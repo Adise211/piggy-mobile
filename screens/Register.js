@@ -3,8 +3,10 @@ import { COLORS } from '../components/constants';
 import PrimaryButton from '../UI/PrimaryButton';
 import { useNavigation } from '@react-navigation/native';
 import { createUser } from '../api/auth';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import WelcomeNewUser from '../components/WelcomeNewUser';
+import { AuthContext } from '../store/authContext';
+
 
 
 
@@ -18,10 +20,8 @@ const Register = () => {
         field: '',
         message: ''
     });
-    const [isLodaing, setIsLodaing] = useState(false);
-    const [authenticated, setAuthenticated] = useState(false);
-    const [authMessage, setAuthMessage] = useState('');
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState(null);
+    const authCtx = useContext(AuthContext);
 
     const backToSignIn = () => {
         navigation.replace('SIGN-IN')
@@ -38,14 +38,11 @@ const Register = () => {
         if (!validFullName) setNotValidMessage({field:'fullName',message: 'Please make sure your full name is correct!'})
 
         if (validEmail && validPassword && validFullName) {
-            setIsLodaing(true);
             setNotValidMessage({field: '', message: ''});
 
             const {data} = await createUser(email, password, fullName);
             console.log("data from front", data);
-            setIsLodaing(false);
-            setAuthenticated(true);
-            setAuthMessage('Created new user');
+            authCtx.authenticate(data.idToken)
             setUser(data.email)
         }
         
@@ -114,17 +111,6 @@ const Register = () => {
                     </View>
 
                     <Text style={{color: 'red', marginTop: 5, textAlign: 'center'}}>{notValidMessage.message}</Text>
-                    {/* <Text 
-                        style={{
-                            color: 'red', 
-                            marginTop: 5, 
-                            textAlign: 'center',
-                            position: 'relative',
-                            
-                        }}
-                    >
-                            {emptyInput}
-                    </Text> */}
                     </View>
                  </View>
                  </>
