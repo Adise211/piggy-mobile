@@ -1,6 +1,8 @@
 import { createContext, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 // pass states trough different components
+
 
 export const AuthContext = createContext({
     // default
@@ -13,7 +15,8 @@ export const AuthContext = createContext({
 
     // will wrapp the child comonents
 const AuthContextProvider = ({children}) => {
-    
+    const navigation = useNavigation();
+
     const [authToken,setAutoToken] = useState(null);
 
     const authenticate = (token) => {
@@ -21,7 +24,8 @@ const AuthContextProvider = ({children}) => {
     };
 
     const logOut = () => {
-        setAutoToken(null)
+        setAutoToken(null);
+        navigation.navigate('SIGN-IN')
     }
 
     const value = {

@@ -7,5 +7,6 @@ export const COLORS = {
     green: '#8bc34a',
     purple: '#9c27b0',
     dark_yellow: '#ffc107',
+    red_error: "#f44336"
     
 }

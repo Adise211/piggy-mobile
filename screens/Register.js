@@ -56,7 +56,7 @@ const Register = () => {
                   <View style={styles.inputsContainer}>
                     <Text>Full Name</Text>
                     <TextInput 
-                        label= 'userNickName'
+                        label= 'userFullName'
                         style={[ 
                             styles.input, 
                             notValidMessage.field === 'fullName'? styles.notValidBorder : styles.back
