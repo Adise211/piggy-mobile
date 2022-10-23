@@ -67,9 +67,9 @@ export default function App() {
             headerTintColor: COLORS.white,
           }}
         >
-          <Stack.Screen name='Mypage' component={TabsNavigator}/>
           <Stack.Screen name='SIGN-IN' component={SignIn} options={{ headerTitleAlign: 'center' }}/>
           <Stack.Screen name='REGISTER' component={Register} options={{ headerTitleAlign: 'center' }}/>
+          <Stack.Screen name='Mypage' component={TabsNavigator}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>

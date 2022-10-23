@@ -1,8 +1,9 @@
 import axios from "axios";
 
+export const KEY_API = 'AIzaSyD-M1L0NerRVl0yUTHx4zPz5ZKwXWGBmSQ';
 
-const DB_URL_SU = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD-M1L0NerRVl0yUTHx4zPz5ZKwXWGBmSQ';
-const DB_URL_SI = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD-M1L0NerRVl0yUTHx4zPz5ZKwXWGBmSQ';
+const DB_URL_SU = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${KEY_API}`;
+const DB_URL_SI = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${KEY_API}`;
 
 export const createUser = async (email, password, fullName) => {
     try {

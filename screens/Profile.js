@@ -10,6 +10,7 @@ const Profile = () => {
     const [email, setEmail] = useState("adisemamo211@gmail.com");
     const [password, setPassword] = useState("******");
     const authCtx = useContext(AuthContext);
+    console.log("my token =>",authCtx.authenticate);
 
     const onEditProfile = () => {
         Alert.alert(
@@ -22,7 +23,7 @@ const Profile = () => {
             )
     };
 
-
+ 
 
 
     const logOutHandler = () => {
