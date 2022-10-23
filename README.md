@@ -1,3 +1,4 @@
 # piggy-mobile
-cd piggy
-npm start
+
+1. cd piggy
+2. npm start
