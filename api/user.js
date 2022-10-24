@@ -1,7 +1,8 @@
 import axios from "axios";
-import { KEY_API } from "./auth";
+// import { KEY_API } from "./auth";
 
 
+const KEY_API = process.env.KEY_API;
 
 const DB_URL_USER_INFO = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${KEY_API}`;
 

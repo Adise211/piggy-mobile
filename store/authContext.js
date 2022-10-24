@@ -16,7 +16,6 @@ export const AuthContext = createContext({
     // will wrapp the child comonents
 const AuthContextProvider = ({children}) => {
     const navigation = useNavigation();
-
     const [authToken,setAutoToken] = useState(null);
 
     const authenticate = (token) => {

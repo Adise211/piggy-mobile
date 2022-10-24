@@ -10,7 +10,8 @@ const Profile = () => {
     const [email, setEmail] = useState("adisemamo211@gmail.com");
     const [password, setPassword] = useState("******");
     const authCtx = useContext(AuthContext);
-    console.log("my token =>",authCtx.authenticate);
+    const token = authCtx.token;
+    console.log("my token =>",token);
 
     const onEditProfile = () => {
         Alert.alert(

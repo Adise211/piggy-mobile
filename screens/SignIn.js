@@ -16,11 +16,13 @@ const SignIn = () => {
     const signinPressHandler = async () => {
         try {
             // TO DO : Invalid email / wrong password message
-            const { data }  = await signInUser(email, password);
-            authCtx.authenticate(data.idToken);
-            console.log("mmmm", data.idToken);
-
-            data ? navigation.replace('Mypage') : console.log("front error", error);
+            const token = await signInUser(email, password);
+            authCtx.authenticate(token);
+            if (token) {
+                navigation.replace('Mypage')
+            } else {
+                console.log("something went wrong");
+            }
 
         } catch (error) {
             Alert.alert('User Not Exist', 'Please check your password or email and try again later.')
