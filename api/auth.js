@@ -1,7 +1,6 @@
 import axios from "axios";
 import { KEY_API } from '../keys';
 
-
 const DB_URL_SU = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + KEY_API;
 const DB_URL_SI = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + KEY_API;
 
