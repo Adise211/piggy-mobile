@@ -16,6 +16,7 @@
     "dotenv": "^16.0.3",
     "expo": "~46.0.13",
     "expo-status-bar": "~1.4.0",
+    "fs": "^0.0.1-security",
     "react": "18.0.0",
     "react-native": "0.69.6",
     "react-native-safe-area-context": "4.3.1",

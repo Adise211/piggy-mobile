@@ -3,8 +3,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../components/constants';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../store/authContext';
+import { useNavigation } from "@react-navigation/native";
+
 
 const Profile = () => {
+    const navigation = useNavigation();
     const [editProfile, setEditProfile] = useState(false);
     const [name, setName] = useState("Adise");
     const [email, setEmail] = useState("adisemamo211@gmail.com");
@@ -29,6 +32,7 @@ const Profile = () => {
 
     const logOutHandler = () => {
         authCtx.logOut();
+        navigation.navigate('SIGN-IN')
     };
 
     return (

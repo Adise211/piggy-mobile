@@ -18,7 +18,6 @@ const Tabs = createBottomTabNavigator();
 
 const TabsNavigator = () => {
   return (
-    <AuthContextProvider>
       <Tabs.Navigator>
         <Tabs.Screen 
           name='Home' 
@@ -48,11 +47,9 @@ const TabsNavigator = () => {
           options={{ tabBarIcon: ({color,size}) => <Ionicons name='person-outline' color={color} size={size} />,
           headerShown: false
           }}
-          
         />
-
       </Tabs.Navigator>
-    </AuthContextProvider>
+    
   )
 }
 
@@ -60,18 +57,20 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator 
-          screenOptions={{
-            headerStyle: {backgroundColor: COLORS.primary_pink},
-            headerTintColor: COLORS.white,
-          }}
-        >
-          <Stack.Screen name='SIGN-IN' component={SignIn} options={{ headerTitleAlign: 'center' }}/>
-          <Stack.Screen name='REGISTER' component={Register} options={{ headerTitleAlign: 'center' }}/>
-          <Stack.Screen name='Mypage' component={TabsNavigator}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+      <AuthContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator 
+            screenOptions={{
+              headerStyle: {backgroundColor: COLORS.primary_pink},
+              headerTintColor: COLORS.white,
+            }}
+          >
+            <Stack.Screen name='SIGN-IN' component={SignIn} options={{ headerTitleAlign: 'center' }}/>
+            <Stack.Screen name='REGISTER' component={Register} options={{ headerTitleAlign: 'center' }}/>
+            <Stack.Screen name='Mypage' component={TabsNavigator}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthContextProvider>
     </>
   );
 }
