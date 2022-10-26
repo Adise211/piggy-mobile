@@ -1,20 +1,38 @@
-import { Text, View, StyleSheet, Alert, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Alert, TextInput, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../components/constants';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../store/authContext';
 import { useNavigation } from "@react-navigation/native";
+import { getUserInfo } from '../api/user';
+import ImagePicker from '../components/ImagePicker';
 
 
 const Profile = () => {
     const navigation = useNavigation();
     const [editProfile, setEditProfile] = useState(false);
-    const [name, setName] = useState("Adise");
-    const [email, setEmail] = useState("adisemamo211@gmail.com");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("******");
+    const [user,setUser] = useState([]);
     const authCtx = useContext(AuthContext);
     const token = authCtx.token;
-    console.log("my token =>",token);
+    const image = authCtx.imageUri;
+    console.log("checking", image);
+
+    useEffect(() => {
+        const userInfo = async () => {
+            try {
+                const data = await getUserInfo(token);
+                setUser(data)
+                setEmail(data[0].email)
+                setName(data[0].displayName)
+            } catch (error) {
+                console.log("could not fetch the user info",error);
+            }
+        };
+        userInfo();
+    }, [])
 
     const onEditProfile = () => {
         Alert.alert(
@@ -28,17 +46,20 @@ const Profile = () => {
     };
 
  
-
-
     const logOutHandler = () => {
         authCtx.logOut();
         navigation.navigate('SIGN-IN')
     };
 
+
     return (
         <View style={styles.container}>
-            <View>
-                <Ionicons name='person-circle-outline' size={90} color={'grey'}/>
+            <View style={styles.imgContainer}>
+                { image 
+                    ? <Image source={{ uri: image }} style={styles.img}/> 
+                    : <Ionicons name='person-circle-outline' size={90} color={'grey'}/>
+                }
+                <ImagePicker />
             </View>
             <View style={styles.settings}> 
                 { !editProfile ? (
@@ -81,14 +102,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 50
+        marginTop: 20
     },
     settings: {
         borderWidth: 1,
         borderColor: "grey",
-        height: 330,
+        height: 320,
         width: 250,
-        marginTop: 8,
+        marginTop: 10,
         backgroundColor: COLORS.white,
         elevation: 5,
     },
@@ -125,7 +146,7 @@ const styles = StyleSheet.create({
         width: 200,
         borderRadius: 8,
         marginLeft: 20,
-        paddingLeft: 5
+        paddingLeft: 7
     },
     cancel:{
         position: 'relative',
@@ -134,6 +155,19 @@ const styles = StyleSheet.create({
         color: COLORS.red_error,
         fontWeight: 'bold',
         fontSize: 16
+    },
+    imgContainer: {
+        alignItems: 'center',
+    },
+    img: {
+        width: 120, 
+        height: 120,
+        borderRadius: 70,
+        position: 'relative',
+        bottom: 7,
+        borderWidth: 2,
+        borderColor: COLORS.primary_pink
+
     }
     
 })

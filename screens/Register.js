@@ -31,7 +31,7 @@ const Register = () => {
     const createNewUserHandler = async () => {
         const validEmail = email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         const validPassword = password.length >= 6;
-        const validFullName = fullName.match(/^[a-zA-Z]+$/);
+        const validFullName = !null;
 
         if (!validEmail) setNotValidMessage({field:'email', message:'Please check your email!'});
         if (!validPassword) setNotValidMessage({field: 'password', message: 'Password length has to be more than 6 figures!'});

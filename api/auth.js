@@ -10,7 +10,8 @@ export const createUser = async (email, password, fullName) => {
             {
                 email: email,
                 password: password,
-                fullName: fullName,
+                displayName: fullName,
+                photoUrl: '',
                 returnSecureToken: true
             }
         );

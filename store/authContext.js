@@ -8,13 +8,16 @@ export const AuthContext = createContext({
     token: '',
     isAuthenticated: false,
     authenticate: () => {},
-    logOut: () => {}
+    logOut: () => {},
+    userImage: () => {},
+    imageUri: ''
 });
 
 
     // will wrapp the child comonents
 const AuthContextProvider = ({children}) => {
     const [authToken,setAutoToken] = useState('');
+    const [image,setImage] = useState('');
 
     const authenticate = (token) => {
         setAutoToken(token);
@@ -24,11 +27,17 @@ const AuthContextProvider = ({children}) => {
         setAutoToken(null);
     };
 
+    const userImage = (uri) => {
+       setImage(uri) 
+    }
+
     const value = {
         token: authToken,
         isAuthenticated: !!authToken,
         authenticate: authenticate,
-        logOut: logOut
+        logOut: logOut,
+        userImage: userImage,
+        imageUri: image
     };
 
 

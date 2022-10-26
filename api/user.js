@@ -1,8 +1,6 @@
 import axios from "axios";
-// import { KEY_API } from "./auth";
+import { KEY_API } from "../keys";
 
-
-const KEY_API = process.env.KEY_API;
 
 const DB_URL_USER_INFO = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${KEY_API}`;
 
@@ -14,8 +12,8 @@ export const getUserInfo = async (id) => {
                 idToken: id
             }
         );
-        console.log(response.data);
-        return response;
+        const data = response.data.users
+        return data;
 
     } catch (error) {
         console.log(error.response.data.error.message);
