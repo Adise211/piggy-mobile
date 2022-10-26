@@ -4,8 +4,10 @@ import { COLORS } from '../components/constants';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../store/authContext';
 import { useNavigation } from "@react-navigation/native";
-import { getUserInfo } from '../api/user';
+import { getUserInfo, updateUserProfile } from '../api/user';
 import ImagePicker from '../components/ImagePicker';
+import SaveButton from '../UI/SaveButton';
+
 
 
 const Profile = () => {
@@ -14,11 +16,12 @@ const Profile = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("******");
+    const [profileImage, setProfileImage] = useState(null)
+    const [saveInfo, setSaveInfo] = useState(false);
     const [user,setUser] = useState([]);
     const authCtx = useContext(AuthContext);
     const token = authCtx.token;
     const image = authCtx.imageUri;
-    console.log("checking", image);
 
     useEffect(() => {
         const userInfo = async () => {
@@ -27,6 +30,8 @@ const Profile = () => {
                 setUser(data)
                 setEmail(data[0].email)
                 setName(data[0].displayName)
+                setProfileImage(data[0].photoUrl)
+                
             } catch (error) {
                 console.log("could not fetch the user info",error);
             }
@@ -45,6 +50,31 @@ const Profile = () => {
             )
     };
 
+    // TO DO: function not working when pressing Save
+    const updateUser = async () => {
+        try {
+            const data = await updateUserProfile({
+                id: token,
+                name: name,
+                image: image,
+            });
+            setProfileImage(data.photoUrl);
+            setName(data.displayName)
+            setEditProfile(false);
+            saveInfo(false)
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        if (!!image) {
+            updateUser();
+        }
+        if (saveInfo) updateUser();
+    }, [image, saveInfo])
+
  
     const logOutHandler = () => {
         authCtx.logOut();
@@ -52,14 +82,15 @@ const Profile = () => {
     };
 
 
+
     return (
         <View style={styles.container}>
             <View style={styles.imgContainer}>
-                { image 
-                    ? <Image source={{ uri: image }} style={styles.img}/> 
+                { profileImage 
+                    ? <Image source={{ uri: profileImage }} style={styles.img}/> 
                     : <Ionicons name='person-circle-outline' size={90} color={'grey'}/>
                 }
-                <ImagePicker />
+                <ImagePicker title={profileImage ? 'change image': 'add image'} />
             </View>
             <View style={styles.settings}> 
                 { !editProfile ? (
@@ -78,7 +109,7 @@ const Profile = () => {
                     </>
                 ) : (
                     <>
-                        <Text style={styles.edit} onPress={onEditProfile}>Save</Text>
+                        <SaveButton style={styles.edit} onPress={() => setSaveInfo(true)}>Save</SaveButton>
                         <Text style={styles.cancel} onPress={() => setEditProfile(false)}>Cancel</Text>
 
                         <Text style={styles.settingsTitle}>Full Name</Text>                    

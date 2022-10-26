@@ -3,7 +3,7 @@ import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../store/authContext';
 
-const ImagePicker = () => {
+const ImagePicker = ({title}) => {
     const authCtx = useContext(AuthContext)
     const [uri, setUri] = useState(null);
 
@@ -25,7 +25,7 @@ const ImagePicker = () => {
 
     return (
         <View>
-            <Button title={ uri ? 'change image': 'add image'} onPress={takeImageHandler}/>
+            <Button title={title} onPress={takeImageHandler}/>
             {/* { uri && <Image source={{ uri: uri }} style={{ width: 100, height: 100 }}/> } */}
         </View>
     )
