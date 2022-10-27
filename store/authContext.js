@@ -10,7 +10,9 @@ export const AuthContext = createContext({
     authenticate: () => {},
     logOut: () => {},
     userImage: () => {},
-    imageUri: ''
+    imageUri: '',
+    createUserInfo: () => {},
+    userInfo: []
 });
 
 
@@ -18,6 +20,7 @@ export const AuthContext = createContext({
 const AuthContextProvider = ({children}) => {
     const [authToken,setAutoToken] = useState('');
     const [image,setImage] = useState('');
+    const [user,setUser] = useState([]);
 
     const authenticate = (token) => {
         setAutoToken(token);
@@ -29,7 +32,12 @@ const AuthContextProvider = ({children}) => {
 
     const userImage = (uri) => {
        setImage(uri) 
-    }
+    };
+
+    const createUserInfo = (data) => {
+        setUser(data);
+    };
+
 
     const value = {
         token: authToken,
@@ -37,7 +45,9 @@ const AuthContextProvider = ({children}) => {
         authenticate: authenticate,
         logOut: logOut,
         userImage: userImage,
-        imageUri: image
+        imageUri: image,
+        createUserInfo: createUserInfo,
+        userInfo: user
     };
 
 

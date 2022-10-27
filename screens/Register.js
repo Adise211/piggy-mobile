@@ -43,6 +43,7 @@ const Register = () => {
             const {data} = await createUser(email, password, fullName);
             console.log("data from front", data);
             authCtx.authenticate(data.idToken)
+            authCtx.createUserInfo(data)
             setUser(data.email)
         }
         

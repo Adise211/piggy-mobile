@@ -5,8 +5,13 @@ export const COLORS = {
     white_gray: '#eee',
     white: '#ffffff',
     green: '#8bc34a',
-    purple: '#9c27b0',
+    purple_400: '#906697',
+    purple_300: '#ce93d8',
     dark_yellow: '#ffc107',
-    red_error: "#f44336"
+    red_error: "#f44336",
+    teal_300: '#80cbc4',
+    teal_400: '#598e89',
+    green_300: '#a5d6a7',
+    green_400: '#739574'
     
 }

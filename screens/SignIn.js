@@ -18,6 +18,7 @@ const SignIn = () => {
             // TO DO : Invalid email / wrong password message
             const { data } = await signInUser(email, password);
             authCtx.authenticate(data.idToken);
+            authCtx.createUserInfo(data);
 
             data ? navigation.replace('Mypage') : console.log("something went wrong");
 

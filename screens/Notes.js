@@ -1,14 +1,14 @@
 import { View, Text } from 'react-native';
 
 
-const Incomes = () => {
+const Notes = () => {
     return (
         <View>
-            <Text>Welcome to Incomes</Text>
+            <Text>Welcome to Notes...</Text>
         </View>
     );
 };
 
 
 
-export default Incomes;
+export default Notes;

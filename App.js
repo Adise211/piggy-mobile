@@ -10,7 +10,11 @@ import Balance from './screens/Balance';
 import { COLORS } from './components/constants';
 import Register from './screens/Register';
 import Report from './screens/Report';
-import AuthContextProvider, { AuthContext } from './store/authContext';
+import Budgets from './screens/Budgets';
+import Expenses from './screens/Expenses';
+import Incomes from './screens/Incomes';
+import Notes from './screens/Notes';
+import AuthContextProvider from './store/authContext';
 import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
@@ -74,6 +78,10 @@ export default function App() {
                 title: " " 
               }}
             />
+            <Stack.Screen name='BUDGETS' component={Budgets} options={{ headerTitleAlign: 'center' }}/>
+            <Stack.Screen name='EXPENSES' component={Expenses} options={{ headerTitleAlign: 'center' }}/>
+            <Stack.Screen name='INCOMES' component={Incomes} options={{ headerTitleAlign: 'center' }}/>
+            <Stack.Screen name='NOTES' component={Notes} options={{ headerTitleAlign: 'center' }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </AuthContextProvider>
