@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         paddingLeft: 7
     },
-    cancel:{
+    cancel: {
         position: 'relative',
         bottom: 2, 
         left: 100,

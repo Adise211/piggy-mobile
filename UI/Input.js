@@ -1,10 +1,14 @@
 import { TextInput, Text, StyleSheet } from 'react-native';
 
-const Input = ({ children, color, styleInput }) => {
+const Input = ({ children, color, styleInput, onChangeText, value  }) => {
     return (
         <>
         <Text>{children}</Text>
-        <TextInput style={[styles.oneInput, { backgroundColor: color }, {...styleInput} ]}/>
+        <TextInput 
+            style={[styles.oneInput, { backgroundColor: color }, {...styleInput} ]} 
+            onChangeText={onChangeText}
+            value={value}
+        />
         </>
     );
 };
