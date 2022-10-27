@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import SignIn from './screens/SignIn';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,7 +10,7 @@ import Balance from './screens/Balance';
 import { COLORS } from './components/constants';
 import Register from './screens/Register';
 import Report from './screens/Report';
-import AuthContextProvider from './store/authContext';
+import AuthContextProvider, { AuthContext } from './store/authContext';
 import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
@@ -67,7 +67,13 @@ export default function App() {
           >
             <Stack.Screen name='SIGN-IN' component={SignIn} options={{ headerTitleAlign: 'center' }}/>
             <Stack.Screen name='REGISTER' component={Register} options={{ headerTitleAlign: 'center' }}/>
-            <Stack.Screen name='Mypage' component={TabsNavigator}/>
+            <Stack.Screen 
+              name='Mypage' 
+              component={TabsNavigator} 
+              options={{ 
+                title: " " 
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </AuthContextProvider>

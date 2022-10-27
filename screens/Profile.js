@@ -45,7 +45,7 @@ const Profile = () => {
             'Are you sure you want to change your details?', 
             [
                 { text: 'NO', onPress: () => console.log("Cancel"), style: 'cancel' },
-                { text: 'Pretty Sure', onPress: () => setEditProfile(true), style: 'destructive' }
+                { text: 'Pretty Sure', onPress: () => setEditProfile(true), style: "default" }
             ]
             )
     };
