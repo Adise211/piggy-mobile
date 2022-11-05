@@ -1,28 +1,63 @@
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable } from 'react-native';
 import Input from '../UI/Input';
 import SaveButton from '../UI/SaveButton';
 import { COLORS } from '../components/constants';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { createNotes, getNotes } from '../api/data';
+import { AuthContext } from '../store/authContext';
+
 
 
 const Notes = () => {
     const [noteText,setNoteText] = useState('');
+    const [saved,setSaved] = useState(false);
+    const [notes,setNotes] = useState([]);
+    const [newNote,setNewNote] = useState(null);
+    const authCtx = useContext(AuthContext);
+    const token = authCtx.token;
 
     const onDelete = () => {
         setNoteText('');
     };
 
-    const onSave = () => {
-        if (noteText !== '') {
+    const onSave = async () => {
+        try {
+            const data  = await createNotes(token,noteText);
+            setNewNote(data.config.data)
+            setNotes([...notes,newNote]);
+
+        } catch (error) {
+            console.log(error);
+        }
+        if (newNote !== '') {
             Alert.alert('Saved Your Note', 'Your new note was saved')
         }
-        // setNoteText('');
+        setSaved(true);
+        setNoteText('');
     };
+
+    const onDeleteNote = async () => {
+        console.log("deleted note");
+    }
+
+    useEffect(() => {
+        const fetchTheNotes = async () => {
+            try {
+                const result = await getNotes(token);
+                setNotes(result);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchTheNotes();
+    },[token,notes])
+
     
     return (
         <View>
             <View style={styles.inputContainer}>
-                <Text style={styles.text}>Notes to myself ...</Text>
+                <Text style={styles.text}>Notes To Myself ...</Text>
                 <Input 
                     color={'white'} 
                     style={styles.input} 
@@ -35,17 +70,20 @@ const Notes = () => {
                 <SaveButton style={styles.save} onPress={onSave}>Save</SaveButton>
                 <SaveButton style={styles.delete} onPress={onDelete}>Delete</SaveButton>
             </View>
-            {noteText ? (
-                <>
-                    <View style={styles.notesContainer}>
-                        <View style={styles.noteCard}>
-                            <Text style={styles.noteText}>{noteText}</Text>
-                        </View>
-                    </View>
-                </>
-            ) : <Text style={styles.noNotes}>No Notes Here.</Text>
-
-            }
+            <View style={styles.notesContainer}>
+                {notes.length > 0 ? notes.map((item, id) => {
+                    return (
+                        <>
+                            <Pressable>
+                                <View key={item ? item.id : id} style={styles.noteCard}>
+                                    <Text style={styles.noteText}>{item ? item.text : " "}</Text>
+                                </View>
+                            </Pressable>
+                            <Ionicons name='close-outline' style={styles.icon} onPress={onDeleteNote}/>
+                        </>
+                    )}) : <Text style={styles.noNotes}>No Notes Here.</Text>
+                }
+            </View>
         </View>
     );
 };
@@ -84,7 +122,7 @@ const styles = StyleSheet.create({
     },
     notesContainer: {
         alignItems: 'center',
-        marginTop: 70
+        marginTop: 50
     },
     noteCard: {
         borderWidth: 2,
@@ -102,6 +140,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 150,
         fontSize: 18
+    },
+    icon: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        marginRight: 300,
+        position: 'relative',
+        bottom: 40
     }
 
 });
