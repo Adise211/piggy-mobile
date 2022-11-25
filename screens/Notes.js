@@ -3,8 +3,7 @@ import Input from '../UI/Input';
 import SaveButton from '../UI/SaveButton';
 import { COLORS } from '../components/constants';
 import { useState, useContext, useEffect } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { createNotes, getNotes } from '../api/data';
+import { createNotes, getNotes, deleteNote } from '../api/data';
 import { AuthContext } from '../store/authContext';
 import * as Haptics from 'expo-haptics';
 
@@ -38,17 +37,22 @@ const Notes = () => {
         setNoteText('');
     };
 
-    const onDeleteNote = async () => {
-        console.log("deleted note");
+    const onDeleteNote = async (noteId) => {
+        try {
+            const deleted = await deleteNote(token,noteId);
+            console.log("result of delete note",deleted);
+        } catch (error) {
+            console.log("my error",error);
+        }
     };
 
-    const test = () => {
+    const pressedNoteCard = (id) => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         Alert.alert(
             'Delete Note', 'Do you want do delete this note?',
                 [
                   { text: 'No' },  
-                  { text: 'Yes', onPress: () => console.log("deleted note") }
+                  { text: 'Yes', onPress: () => onDeleteNote(id) }
                 ]
             )
     };
@@ -56,8 +60,12 @@ const Notes = () => {
     const renderNotes = ({ item }) => {
        return ( 
         <View style={styles.noteCard}>
-            <TouchableOpacity key={item.id} onLongPress={test} activeOpacity={0.8} >
-                <Text style={styles.noteText}>{item.text}</Text>
+            <TouchableOpacity 
+                key={item? item.id : ''} 
+                onLongPress={() => pressedNoteCard(item.id)} 
+                activeOpacity={0.8}
+            >
+                <Text style={styles.noteText}>{item? item.text: ''}</Text>
             </TouchableOpacity>
         </View>
        )
@@ -97,22 +105,6 @@ const Notes = () => {
                     data={notes}
                     renderItem={renderNotes}
                 />
-                {/* <SafeAreaView>
-                <ScrollView style={{marginBottom: 50 }}>
-                    {notes.length > 0 ? notes.map((item, id) => {
-                        return (
-                            <>
-                                <Pressable key={item ? item.id : id}>
-                                    <View style={styles.noteCard}>
-                                        <Text style={styles.noteText}>{item ? item.text : " "}</Text>
-                                    </View>
-                                </Pressable>
-                                <Ionicons name='close-outline' style={styles.icon} onPress={onDeleteNote}/>
-                            </>
-                        )}) : <Text style={styles.noNotes}>No Notes Here.</Text>
-                    }
-                </ScrollView>
-                </SafeAreaView> */}
             </View>
         </View>
     );

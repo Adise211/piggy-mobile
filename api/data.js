@@ -34,3 +34,12 @@ export const getNotes = async (token) => {
         console.log(error.response.data.error);
      }
 };
+
+export const deleteNote = async (token, noteId) => {
+    try {
+        const result = await axios.delete(`${DB_DATA_URL}/notes/${noteId}.json?auth=${token}`);
+        if (result) return { message: 'Deleted Note Successfully!' }
+    } catch (error) {
+        console.log(error.response.data.error);
+    }
+}
