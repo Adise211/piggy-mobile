@@ -101,10 +101,16 @@ const Notes = () => {
                 <SaveButton style={styles.delete} onPress={onDelete}>Delete</SaveButton>
             </View>
             <View style={styles.notesContainer}>
-                <FlatList 
+                { notes.length > 0 ? (
+                    <FlatList 
                     data={notes}
                     renderItem={renderNotes}
-                />
+                    />
+                ) : (
+                    <Text style={styles.noNotes}>No Notes Here.</Text>
+                )
+            }
+    
             </View>
         </View>
     );
@@ -164,7 +170,7 @@ const styles = StyleSheet.create({
     },
     noNotes: {
         textAlign: 'center',
-        marginTop: 150,
+        marginTop: 100,
         fontSize: 18
     },
     icon: {
