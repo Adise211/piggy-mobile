@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Alert, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Alert, Vibration, FlatList, TouchableOpacity } from 'react-native';
 import Input from '../UI/Input';
 import SaveButton from '../UI/SaveButton';
 import { COLORS } from '../components/constants';
@@ -6,6 +6,7 @@ import { useState, useContext, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createNotes, getNotes } from '../api/data';
 import { AuthContext } from '../store/authContext';
+import * as Haptics from 'expo-haptics';
 
 
 
@@ -39,6 +40,27 @@ const Notes = () => {
 
     const onDeleteNote = async () => {
         console.log("deleted note");
+    };
+
+    const test = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        Alert.alert(
+            'Delete Note', 'Do you want do delete this note?',
+                [
+                  { text: 'No' },  
+                  { text: 'Yes', onPress: () => console.log("deleted note") }
+                ]
+            )
+    };
+
+    const renderNotes = ({ item }) => {
+       return ( 
+        <View style={styles.noteCard}>
+            <TouchableOpacity key={item.id} onLongPress={test} activeOpacity={0.8} >
+                <Text style={styles.noteText}>{item.text}</Text>
+            </TouchableOpacity>
+        </View>
+       )
     }
 
     useEffect(() => {
@@ -71,18 +93,26 @@ const Notes = () => {
                 <SaveButton style={styles.delete} onPress={onDelete}>Delete</SaveButton>
             </View>
             <View style={styles.notesContainer}>
-                {notes.length > 0 ? notes.map((item, id) => {
-                    return (
-                        <>
-                            <Pressable>
-                                <View key={item ? item.id : id} style={styles.noteCard}>
-                                    <Text style={styles.noteText}>{item ? item.text : " "}</Text>
-                                </View>
-                            </Pressable>
-                            <Ionicons name='close-outline' style={styles.icon} onPress={onDeleteNote}/>
-                        </>
-                    )}) : <Text style={styles.noNotes}>No Notes Here.</Text>
-                }
+                <FlatList 
+                    data={notes}
+                    renderItem={renderNotes}
+                />
+                {/* <SafeAreaView>
+                <ScrollView style={{marginBottom: 50 }}>
+                    {notes.length > 0 ? notes.map((item, id) => {
+                        return (
+                            <>
+                                <Pressable key={item ? item.id : id}>
+                                    <View style={styles.noteCard}>
+                                        <Text style={styles.noteText}>{item ? item.text : " "}</Text>
+                                    </View>
+                                </Pressable>
+                                <Ionicons name='close-outline' style={styles.icon} onPress={onDeleteNote}/>
+                            </>
+                        )}) : <Text style={styles.noNotes}>No Notes Here.</Text>
+                    }
+                </ScrollView>
+                </SafeAreaView> */}
             </View>
         </View>
     );
@@ -122,15 +152,19 @@ const styles = StyleSheet.create({
     },
     notesContainer: {
         alignItems: 'center',
-        marginTop: 50
+        marginTop: 50,
+        marginBottom: 400,
     },
     noteCard: {
         borderWidth: 2,
-        width: 250,
+        marginBottom: 20,
+        width: 280,
+        minHeight: 20,
         padding: 15,
-        elevation: 5,
+        elevation: 2,
         backgroundColor: 'pink',
-        borderColor: 'pink'
+        borderColor: 'pink',
+        borderRadius: 10
     },
     noteText: {
         fontSize: 16,
