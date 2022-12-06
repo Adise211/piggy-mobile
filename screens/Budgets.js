@@ -1,7 +1,21 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useLayoutEffect } from 'react';
 
-const Budgets = () => {
+const Budgets = ({ navigation }) => {
+
+    const editHandler = () => {
+        navigation.navigate('EditBudget');
+    };
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => {
+                return <Button title='Edit' onPress={editHandler}/>
+            }
+        });
+        
+    },[navigation,editHandler])
 
     const currency = '$';
     const budget = [

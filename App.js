@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import SignIn from './screens/SignIn';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -15,6 +15,7 @@ import Expenses from './screens/Expenses';
 import Incomes from './screens/Incomes';
 import Notes from './screens/Notes';
 import AuthContextProvider from './store/authContext';
+import EditBudgets from './screens/EditBudgets';
 import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
@@ -78,10 +79,18 @@ export default function App() {
                 title: " " 
               }}
             />
-            <Stack.Screen name='BUDGETS' component={Budgets} options={{ headerTitleAlign: 'center' }}/>
+            <Stack.Screen 
+              name='BUDGETS' 
+              component={Budgets} 
+              options={{ 
+                headerTitleAlign: 'center', 
+                title: 'Budgets'
+              }}
+            />
             <Stack.Screen name='EXPENSES' component={Expenses} options={{ headerTitleAlign: 'center' }}/>
             <Stack.Screen name='INCOMES' component={Incomes} options={{ headerTitleAlign: 'center' }}/>
             <Stack.Screen name='NOTES' component={Notes} options={{ headerTitleAlign: 'center' }}/>
+            <Stack.Screen name='EditBudget' component={EditBudgets} options={{ headerTitleAlign: 'center', title: ' ' }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </AuthContextProvider>
