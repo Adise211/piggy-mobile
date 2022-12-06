@@ -1,30 +1,70 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import BudgetCards from '../components/Cards';
+import { Ionicons } from '@expo/vector-icons';
 
 const Budgets = () => {
 
     const currency = '$';
     const budget = [
-        {
+        {   
+            id: 1,
             fieldName: 'Food',
-            amount: 1500
+            amount: 1500,
+            icon: 'fast-food'
         },
         {
+            id: 2,
             fieldName: 'Car',
-            amount: 430
+            amount: 430,
+            icon: 'car'
         },
         {
+            id: 3,
             fieldName: 'Rent',
-            amount: 2100
+            amount: 2100,
+            icon: 'home'
         },
+        {
+            id: 4,
+            fieldName: 'TV',
+            amount: 139,
+            icon: 'tv'
+        },
+        {
+            id: 5,
+            fieldName: 'Sport',
+            amount: 100,
+            icon: 'barbell'
+        },
+        {
+            id: 6,
+            fieldName: 'Health',
+            amount: 300,
+            icon: 'fitness'
+        },
+        {
+            id: 7,
+            fieldName: 'Shopping',
+            amount: 320,
+            icon: 'cart'
+        },
+        {
+            id: 8,
+            fieldName: 'Leisure',
+            amount: 320,
+            icon: 'happy'
+        },
+
 
     ];
     
-    const renderBudgetCard = ({ item }) => {
+    const renderBudgetCard = (item) => {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} key={item.id}>
                 <Text style={styles.title}>{item.fieldName}</Text>
-                <Text style={styles.amount}>{item.amount}{currency}</Text>
+                <Text style={styles.amount}>{currency}{item.amount}</Text>
+                <View style={styles.icons}>
+                    <Ionicons name={item.icon} size={24} />
+                </View>
             </View>
         )
     }
@@ -33,10 +73,14 @@ const Budgets = () => {
     return (
         <View>
             <View style={styles.cardsContainer}>
-                <FlatList 
+                {/* <FlatList 
+                    style={styles.list}
                     data={budget}
                     renderItem={renderBudgetCard}
-                />
+                /> */}
+                {budget.map((item) => {
+                    return renderBudgetCard(item)
+                })}
             </View>
         </View>
     );
@@ -44,8 +88,12 @@ const Budgets = () => {
 
 const styles = StyleSheet.create({
     cardsContainer: {
-        marginTop: 50
-        
+        flex: 1,
+        marginTop: 50,
+        minHeight: 800,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     container: {
         width: 150,
@@ -54,7 +102,10 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginTop: 10,
         elevation: 8,
-        backgroundColor: 'white'
+        marginBottom: 10,
+        backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'column',
     },
     title: {
         textAlign: 'center',
@@ -66,8 +117,12 @@ const styles = StyleSheet.create({
     amount: {
         fontSize: 18,
         marginBottom: 40,
-        // marginLeft: 20
         textAlign: 'center'
+    },
+    icons: {
+        alignItems: 'center',
+        position: 'relative',
+        bottom: 20
     }
 });
 
