@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, ScrollView, Switch } from "react-nat
 import { COLORS } from "../components/constants";
 import FieldAutocomplete from "../components/FieldAutocomplete";
 import { fieldOptions } from "../components/constants";
+import SaveButton from "../UI/SaveButton";
 
 
 const EditBudgets = () => {
@@ -118,21 +119,10 @@ const EditBudgets = () => {
                     />
                 </View>
             </View>
-            
-
-
-
-
-
-
-
-            {/* <Text>choose icon(optinal)</Text>
-            <Text>amount</Text>
-            <Text>Settings: (toggles)</Text>
-            <Text>1. Send me a warning notefication </Text>
-            <Text>2. Send me an error notefication</Text>
-            <Text>3. spesific field..</Text>
-            <Text>4. currency</Text> */}
+            <View style={styles.buttonsContainer}>
+                {/* <SaveButton style={styles.delete} onPress={() => {}}>Cancel</SaveButton> */}
+                <SaveButton style={styles.save} onPress={() => {}}>Save</SaveButton>
+            </View>
         </View>
     )
 };
@@ -188,7 +178,30 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
         marginTop: 10
-    }
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: 200,
+        position: 'relative',
+        top: 50
+    },
+    save: {
+        padding: 10,
+        backgroundColor: COLORS.primary_pink,
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+        width: 65,
+        textAlign: 'center'
+    },
+    delete: {
+        padding: 10,
+        backgroundColor: COLORS.BLUE_500,
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
 })
 
 export default EditBudgets;
