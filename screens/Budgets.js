@@ -6,6 +6,7 @@ import { budgets } from '../components/constants';
 
 
 const Budgets = ({ navigation }) => {
+    const currency = '$';
 
     const addHandler = () => {
         navigation.navigate('EditBudget');
@@ -20,34 +21,23 @@ const Budgets = ({ navigation }) => {
         
     },[navigation,addHandler])
 
-    const onBudgetPressView = () => {
-        navigation.navigate('ViewBudget');
+    const onBudgetPressView = (budget) => {
+        navigation.navigate('ViewBudget', {
+            budgetInfo: budget
+        });
     };
-
-    // const handleEditBudget = () => {
-    //     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    //     Alert.alert(
-    //         'Edit Budget', 'Do you want to edit the budget?',
-    //             [
-    //               { text: 'No' },  
-    //               { text: 'Yes', onPress: () => console.log("Edit budget!") }
-    //             ]
-    //     )
-    // };
-
-    const currency = '$';
     
     const renderBudgetCard = (item) => {
         return (
             <View style={styles.container} key={item.id}>
-                <Text style={styles.title} onPress={() => onBudgetPressView()}>{item.fieldName}</Text>
+                <Text style={styles.title} onPress={() => onBudgetPressView(item)}>{item.fieldName}</Text>
                 <Text style={styles.amount}>{currency}{item.amount}</Text>
                 <View style={styles.icons}>
                     <Ionicons name={item.icon} size={24} />
                 </View>
             </View>
         )
-    }
+    };
 
 
     return (
