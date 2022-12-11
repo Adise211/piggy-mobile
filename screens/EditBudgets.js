@@ -93,7 +93,7 @@ const EditBudgets = () => {
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={toggleSwitch}
                         value={isEnabled}
-                        style={{ marginLeft: 30 }}
+                        style={{ marginLeft: 38 }}
                     />
                 </View>
                 <View style={styles.toggle}>
@@ -104,7 +104,7 @@ const EditBudgets = () => {
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={() => setIsEnabled2(!isEnabled2)}
                         value={isEnabled2}
-                        style={{ marginLeft: 30 }}
+                        style={{ marginLeft: 50 }}
                     />
                 </View>
                 <View style={styles.toggle}>
@@ -115,7 +115,7 @@ const EditBudgets = () => {
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={() => setIsEnabled3(!isEnabled3)}
                         value={isEnabled3}
-                        style={{ marginLeft: 30 }}
+                        style={{ marginLeft: 50 }}
                     />
                 </View>
             </View>
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     toggleText: {
         fontWeight: 'bold',
         fontSize: 16,
-        marginTop: 10
+        marginTop: 10,
     },
     buttonsContainer: {
         flexDirection: 'row',
