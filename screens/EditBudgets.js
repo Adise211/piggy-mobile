@@ -11,6 +11,8 @@ const EditBudgets = () => {
     const [selectedName,setSelectedName] = useState('');
     const [amount,setAmount] = useState(0);
     const [isEnabled, setIsEnabled] = useState(false);
+    const [isEnabled2, setIsEnabled2] = useState(false);
+    const [isEnabled3, setIsEnabled3] = useState(false);
 
     const currency = '$';
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -80,19 +82,50 @@ const EditBudgets = () => {
                 />
                 <Text style={styles.currency}>{currency}</Text>
             </View>
-            <View>
-                <Text>Budgets Settings</Text>
+            <Text style={styles.lebel}>Budgets Settings</Text>
+            <View style={styles.togglesContainer}>
                 <View style={styles.toggle}>
-                    <Text>Send me a warning notefication</Text>
+                    <Text style={styles.toggleText}>Send me a warning notefication</Text>
                     <Switch 
                         trackColor={{ false: COLORS.gray , true: COLORS.pink }}
                         thumbColor={isEnabled ? COLORS.primary_pink : "#f4f3f4" }
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={toggleSwitch}
                         value={isEnabled}
+                        style={{ marginLeft: 30 }}
+                    />
+                </View>
+                <View style={styles.toggle}>
+                    <Text style={styles.toggleText}>Send me an error notefication</Text>
+                    <Switch 
+                        trackColor={{ false: COLORS.gray , true: COLORS.pink }}
+                        thumbColor={isEnabled2 ? COLORS.primary_pink : "#f4f3f4" }
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => setIsEnabled2(!isEnabled2)}
+                        value={isEnabled2}
+                        style={{ marginLeft: 30 }}
+                    />
+                </View>
+                <View style={styles.toggle}>
+                    <Text style={styles.toggleText}>Remind me to use this budget</Text>
+                    <Switch 
+                        trackColor={{ false: COLORS.gray , true: COLORS.pink }}
+                        thumbColor={isEnabled3 ? COLORS.primary_pink : "#f4f3f4" }
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => setIsEnabled3(!isEnabled3)}
+                        value={isEnabled3}
+                        style={{ marginLeft: 30 }}
                     />
                 </View>
             </View>
+            
+
+
+
+
+
+
+
             {/* <Text>choose icon(optinal)</Text>
             <Text>amount</Text>
             <Text>Settings: (toggles)</Text>
@@ -143,9 +176,19 @@ const styles = StyleSheet.create({
         bottom: 55,
         left: 230
     },
-    // toggle: {
-    //     width: 200
-    // }
+    togglesContainer: {
+        marginTop: 10,
+    },
+    toggle: {
+        marginTop: 30,
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    toggleText: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginTop: 10
+    }
 })
 
 export default EditBudgets;

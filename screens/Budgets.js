@@ -11,7 +11,7 @@ const Budgets = ({ navigation }) => {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => {
-                return <Button title='Edit' onPress={editHandler}/>
+                return <Button title='ADD' onPress={editHandler}/>
             }
         });
         
