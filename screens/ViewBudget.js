@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from "../components/constants";
 import SaveButton from "../UI/SaveButton";
 
-const ViewBudget = ({ route }) => {
+const ViewBudget = ({ route, navigation }) => {
     const [per,setPer] = useState(0);
     const [color,setColor] = useState("#007AFF");
     const { budgetInfo } = route.params;
@@ -36,6 +36,12 @@ const ViewBudget = ({ route }) => {
 
     const remainColor = remain < 0 ? "red": "black";
 
+    const onPressEdit = () => {
+        navigation.navigate('EditBudget', {
+            budget: budgetInfo
+        });
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.field}>{budgetInfo.fieldName}</Text>
@@ -62,7 +68,7 @@ const ViewBudget = ({ route }) => {
                     <Ionicons name="checkmark" size={22} style={styles.icon}/><Text style={styles.text}>Remind me to use this budget</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
-                <SaveButton style={styles.delete} onPress={() => {}}>Edit</SaveButton>
+                <SaveButton style={styles.delete} onPress={() => onPressEdit()}>Edit</SaveButton>
             </View>
             </View>
         </View>
