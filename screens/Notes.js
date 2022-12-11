@@ -54,7 +54,7 @@ const Notes = () => {
                   { text: 'No' },  
                   { text: 'Yes', onPress: () => onDeleteNote(id) }
                 ]
-            )
+        )
     };
 
     const renderNotes = ({ item }) => {

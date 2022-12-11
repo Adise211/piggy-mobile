@@ -1,80 +1,46 @@
 import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useLayoutEffect } from 'react';
+import * as Haptics from 'expo-haptics';
+import { budgets } from '../components/constants';
+
 
 const Budgets = ({ navigation }) => {
 
-    const editHandler = () => {
+    const addHandler = () => {
         navigation.navigate('EditBudget');
     };
 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => {
-                return <Button title='ADD' onPress={editHandler}/>
+                return <Button title='ADD' onPress={addHandler}/>
             }
         });
         
-    },[navigation,editHandler])
+    },[navigation,addHandler])
+
+    const onBudgetPressView = () => {
+        navigation.navigate('ViewBudget');
+    };
+
+    // const handleEditBudget = () => {
+    //     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    //     Alert.alert(
+    //         'Edit Budget', 'Do you want to edit the budget?',
+    //             [
+    //               { text: 'No' },  
+    //               { text: 'Yes', onPress: () => console.log("Edit budget!") }
+    //             ]
+    //     )
+    // };
 
     const currency = '$';
-    const budget = [
-        {   
-            id: 1,
-            fieldName: 'Food',
-            amount: 1500,
-            icon: 'fast-food'
-        },
-        {
-            id: 2,
-            fieldName: 'Car',
-            amount: 430,
-            icon: 'car'
-        },
-        {
-            id: 3,
-            fieldName: 'Rent',
-            amount: 2100,
-            icon: 'home'
-        },
-        {
-            id: 4,
-            fieldName: 'TV',
-            amount: 139,
-            icon: 'tv'
-        },
-        {
-            id: 5,
-            fieldName: 'Sport',
-            amount: 100,
-            icon: 'barbell'
-        },
-        {
-            id: 6,
-            fieldName: 'Health',
-            amount: 300,
-            icon: 'fitness'
-        },
-        {
-            id: 7,
-            fieldName: 'Shopping',
-            amount: 320,
-            icon: 'cart'
-        },
-        {
-            id: 8,
-            fieldName: 'Leisure',
-            amount: 320,
-            icon: 'happy'
-        },
-
-
-    ];
     
     const renderBudgetCard = (item) => {
         return (
             <View style={styles.container} key={item.id}>
-                <Text style={styles.title}>{item.fieldName}</Text>
+                <Text style={styles.title} onPress={() => onBudgetPressView()}>{item.fieldName}</Text>
                 <Text style={styles.amount}>{currency}{item.amount}</Text>
                 <View style={styles.icons}>
                     <Ionicons name={item.icon} size={24} />
@@ -92,7 +58,7 @@ const Budgets = ({ navigation }) => {
                     data={budget}
                     renderItem={renderBudgetCard}
                 /> */}
-                {budget.map((item) => {
+                {budgets.map((item) => {
                     return renderBudgetCard(item)
                 })}
             </View>
