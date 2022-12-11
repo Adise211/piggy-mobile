@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ProgressBar from 'react-native-progress/Bar';
-
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from "../components/constants";
+import SaveButton from "../UI/SaveButton";
 
 const ViewBudget = ({ route }) => {
     const [per,setPer] = useState(0);
@@ -32,29 +34,44 @@ const ViewBudget = ({ route }) => {
         
     },[per])
 
+    const remainColor = remain < 0 ? "red": "black";
+
     return (
         <View style={styles.container}>
             <Text style={styles.field}>{budgetInfo.fieldName}</Text>
             <Text style={styles.amount}>${budgetInfo.amount}</Text>
-            <Text>Used: ${used}</Text>
-            <Text>Remain: ${remain}</Text>
-            <ProgressBar 
-                width={300} 
-                height={30} 
-                progress={per} 
-                unfilledColor={'white'}
-                borderWidth={2}
-                borderRadius={10}
-                borderColor={color}
-                color={color}
-            />
+            <View style={styles.infoSection}>
+                <Text style={styles.text}>Used: - ${used}</Text>
+                <Text style={[styles.text, { color: remainColor } ]}>Remain: ${remain}</Text>
+                <Text style={styles.text}>Left Days: {"21"}</Text>
+                <ProgressBar 
+                    width={300} 
+                    height={30} 
+                    progress={per} 
+                    unfilledColor={'white'}
+                    borderWidth={2}
+                    borderRadius={10}
+                    borderColor={color}
+                    color={color}
+                    style={{ marginTop: 30 }}
+                />
+                <Text style={[styles.text, { fontWeight: 'bold' }]}>{(per * 100).toFixed(2) + '%'}</Text>
+                <View style={styles.settings}>
+                    <Ionicons name="checkmark" size={22} style={styles.icon}/><Text style={styles.text}>Send me a warning notefication</Text>
+                    <Ionicons name="checkmark" size={22} style={styles.icon}/><Text style={styles.text}>Send me an error notefication</Text>
+                    <Ionicons name="checkmark" size={22} style={styles.icon}/><Text style={styles.text}>Remind me to use this budget</Text>
+                </View>
+                <View style={styles.buttonsContainer}>
+                <SaveButton style={styles.delete} onPress={() => {}}>Edit</SaveButton>
+            </View>
+            </View>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 100,
+        marginTop: 80,
         alignItems: 'center'
     },
     field: {
@@ -64,7 +81,38 @@ const styles = StyleSheet.create({
     amount: {
         fontSize: 20,
         marginTop: 10
-    }
+    },
+    infoSection: {
+        alignItems: 'center',
+        marginTop: 40
+    },
+    text: {
+        fontSize: 18,
+        marginTop: 5
+    },
+    settings: {
+        marginTop: 30,
+        fontSize: 18,
+    },
+    icon: {
+        position: 'relative',
+        top: 30,
+        right: 25
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: 200,
+        position: 'relative',
+        top: 50
+    },
+    delete: {
+        padding: 10,
+        backgroundColor: COLORS.BLUE_500,
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
 })
 
 export default ViewBudget;
