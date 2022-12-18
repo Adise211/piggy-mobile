@@ -16,6 +16,7 @@ import Notes from './screens/Notes';
 import AuthContextProvider from './store/authContext';
 import EditAddBudgets from './screens/EditAddBudgets';
 import ViewBudget from './screens/ViewBudget';
+import IncomeOutcome from './screens/IncomeOutcome';
 import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
@@ -92,6 +93,7 @@ export default function App() {
             <Stack.Screen name='NOTES' component={Notes} options={{ headerTitleAlign: 'center' }}/>
             <Stack.Screen name='EditBudget' component={EditAddBudgets} options={{ title: ' ' }}/>
             <Stack.Screen name='ViewBudget' component={ViewBudget} options={{ title: 'View Budget', headerTitleAlign: 'center'  }}/>
+            <Stack.Screen name='Report' component={IncomeOutcome} options={{ title: 'Report', headerTitleAlign: 'center'  }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </AuthContextProvider>

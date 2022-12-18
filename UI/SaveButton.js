@@ -1,6 +1,6 @@
 import { View, Text, Pressable } from 'react-native';
 
-const SaveButton = ({ children, onPress, style}) => {
+const SaveButton = ({ children, onPress, style }) => {
     return (
         <Pressable onPress={onPress}>
             <View>
