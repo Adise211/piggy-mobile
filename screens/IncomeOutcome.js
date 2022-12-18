@@ -1,17 +1,25 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import SaveButton from "../UI/SaveButton";
 import { COLORS } from "../components/constants";
+import ReportIncome from "../components/ReportIncome";
+import ReportOutcome from "../components/ReportOutcome";
 
-const IncomeOutcome = ({ route, navigation }) => {
+const IncomeOutcome = ({ route }) => {
     const { reportType } = route.params;
 
-    const goBackHandler = () => {
-        navigation.goBack('Report');
-    };
+    // const goBackHandler = () => {
+    //     navigation.goBack('Report');
+    // };
 
     return (
         <View style={styles.container}>
-            <Text>My report is .... {reportType}</Text>
+            <View>
+                {reportType === 'income' ? (
+                    <ReportIncome />
+                ): (
+                    <ReportOutcome />
+                )}
+            </View>
             <View style={styles.buttonsContainer}>
                 <SaveButton style={styles.save}>Save</SaveButton>
                 {/* <SaveButton style={styles.back} onPress={() => goBackHandler()}>Back</SaveButton> */}

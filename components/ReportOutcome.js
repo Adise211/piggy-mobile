@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 
 
-const ReportOutcome = ({ setReport }) => {
+const ReportOutcome = () => {
     return (
         <View>
             <Text>Report outcome</Text>
