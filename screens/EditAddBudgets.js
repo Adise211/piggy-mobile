@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, ScrollView, Switch } from "react-native";
 import { COLORS } from "../components/constants";
-import FieldAutocomplete from "../components/FieldAutocomplete";
 import { fieldOptions } from "../components/constants";
 import SaveButton from "../UI/SaveButton";
+import EditBudget from "../components/EditBudget";
 
 
-const EditBudgets = () => {
+const EditAddBudgets = ({ route }) => {
     const [openOptions,setOpenOptions] = useState(false);
     const [list,setList] = useState([]);
     const [selectedName,setSelectedName] = useState('');
@@ -14,6 +14,7 @@ const EditBudgets = () => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabled2, setIsEnabled2] = useState(false);
     const [isEnabled3, setIsEnabled3] = useState(false);
+    const { budget } = route.params;
 
     const currency = '$';
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -47,7 +48,11 @@ const EditBudgets = () => {
 
     return (
         <View style={styles.container}>
-            <View>
+            { budget
+            ? <EditBudget budget={budget}/>
+            : (
+            <>
+                <View>
                 <Text style={styles.lebel}>Field</Text>
                 <TextInput 
                     style={styles.input} 
@@ -118,11 +123,13 @@ const EditBudgets = () => {
                         style={{ marginLeft: 50 }}
                     />
                 </View>
-            </View>
-            <View style={styles.buttonsContainer}>
-                {/* <SaveButton style={styles.delete} onPress={() => {}}>Cancel</SaveButton> */}
-                <SaveButton style={styles.save} onPress={() => {}}>Save</SaveButton>
-            </View>
+                </View>
+                <View style={styles.buttonsContainer}>
+                    {/* <SaveButton style={styles.delete} onPress={() => {}}>Cancel</SaveButton> */}
+                    <SaveButton style={styles.save} onPress={() => {}}>Save</SaveButton>
+                </View>
+            </>
+        )}
         </View>
     )
 };
@@ -204,4 +211,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default EditBudgets;
+export default EditAddBudgets;
