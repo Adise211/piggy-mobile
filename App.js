@@ -93,7 +93,7 @@ export default function App() {
             <Stack.Screen name='NOTES' component={Notes} options={{ headerTitleAlign: 'center' }}/>
             <Stack.Screen name='EditBudget' component={EditAddBudgets} options={{ title: ' ' }}/>
             <Stack.Screen name='ViewBudget' component={ViewBudget} options={{ title: 'View Budget', headerTitleAlign: 'center'  }}/>
-            <Stack.Screen name='Report' component={IncomeOutcome} options={{ title: 'Report', headerTitleAlign: 'center'  }}/>
+            <Stack.Screen name='IncomeOutcome' component={IncomeOutcome} options={{ title: ' ' }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </AuthContextProvider>

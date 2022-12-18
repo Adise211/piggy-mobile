@@ -7,8 +7,7 @@ const Report = () => {
     const navigation = useNavigation();
     
     const reportHandler = (report) => {
-        console.log("report ==>", report);
-        navigation.navigate('Report', {
+        navigation.navigate('IncomeOutcome', {
             reportType: report
         });
     };
