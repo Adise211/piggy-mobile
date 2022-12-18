@@ -14,13 +14,15 @@ const EditAddBudgets = ({ route }) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabled2, setIsEnabled2] = useState(false);
     const [isEnabled3, setIsEnabled3] = useState(false);
-    const { budget } = route.params;
+    const [budget,setBudget] = useState(null);
+    // const { budget } = route.params;
 
     const currency = '$';
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     useState(() => {
         setList(fieldOptions);
+        route.params && route.params.budget ? setBudget(route.params.budget) : setBudget(null)
     },[])
 
     const onStart = () => {
