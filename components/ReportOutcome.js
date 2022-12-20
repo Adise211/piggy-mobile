@@ -1,22 +1,32 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { budgets, COLORS } from "./constants";
 import SaveButton from "../UI/SaveButton";
+import { useState } from "react";
 
 
 const ReportOutcome = () => {
+    const [pressedCat,setPressedCat] = useState(null);
 
     const changeColor = (id) => {
-
+        console.log("cliked me!",id);
+        setPressedCat(id);
     };
 
     return (
         <View style={styles.ouContainer}>
             <Text style={styles.title}>Add Your Expense</Text>
             <View style={styles.inputs}>
-            <Text>Catagory:</Text>
+            <Text>Category:</Text>
                 <View style={styles.catCards}>
                     {budgets.map(budg => {
-                        return <Text id={budg.id} key={budg.id} style={styles.card} onPress={() => changeColor(budg.id)}>{budg.fieldName}</Text>
+                        return <SaveButton 
+                                    key={budg.id} 
+                                    style={[styles.card]} 
+                                    onPress={() => changeColor(budg.id)}
+                                    pressedStyle={{ backgroundColor: COLORS.red_error }}
+                                >
+                                    {budg.fieldName}
+                                </SaveButton>
                     })}
                 </View>
                 <Text>Title:</Text>
