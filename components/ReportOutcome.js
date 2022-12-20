@@ -1,15 +1,26 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import { COLORS } from "./constants";
+import { budgets, COLORS } from "./constants";
 import SaveButton from "../UI/SaveButton";
 
 
 const ReportOutcome = () => {
+
+    const changeColor = (id) => {
+
+    };
+
     return (
         <View style={styles.ouContainer}>
-            <Text style={styles.title}>Add Your Outcome</Text>
+            <Text style={styles.title}>Add Your Expense</Text>
             <View style={styles.inputs}>
+            <Text>Catagory:</Text>
+                <View style={styles.catCards}>
+                    {budgets.map(budg => {
+                        return <Text id={budg.id} key={budg.id} style={styles.card} onPress={() => changeColor(budg.id)}>{budg.fieldName}</Text>
+                    })}
+                </View>
                 <Text>Title:</Text>
-                <TextInput style={styles.input} placeholder="Salary"/>
+                <TextInput style={styles.input} placeholder="Shoes"/>
                 <Text>Amount:</Text>
                 <TextInput style={styles.input} />
                 <Text>Date:</Text>
@@ -25,7 +36,7 @@ const ReportOutcome = () => {
 
 const styles = StyleSheet.create({
     ouContainer: {
-        marginTop: 50
+        marginTop: 40
     },
     title: {
         fontSize: 18,
@@ -46,6 +57,26 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         borderRadius: 8,
         padding: 10
+    },
+    catCards: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        maxHeight: 80,
+        width: 300,
+        marginVertical: 'auto',
+        marginBottom: 40,
+        marginTop: 10
+    },
+    card: {
+        borderWidth: 1,
+        borderColor: 'black',
+        backgroundColor: 'white',
+        textAlign: 'center',
+        borderRadius: 8,
+        elevation: 5,
+        padding: 10,
+        margin: 5
     },
     buttonsContainer: {
         flexDirection: 'row',

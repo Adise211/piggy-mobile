@@ -16,7 +16,7 @@ const Report = () => {
         <View style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <SaveButton style={styles.income} onPress={() => reportHandler('income')}>Report Income</SaveButton>
-                <SaveButton style={styles.outcome} onPress={() => reportHandler('outcome')}>Report Outcome</SaveButton>
+                <SaveButton style={styles.outcome} onPress={() => reportHandler('outcome')}>Report Expense</SaveButton>
             </View>
         </View>
     )

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { COLORS } from "./constants";
 import SaveButton from "../UI/SaveButton";
+import { budgets } from "./constants";
 
 const ReportIncome = () => {
     return (
