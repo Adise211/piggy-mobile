@@ -3,35 +3,43 @@ import { DB_DATA_URL } from "../keys";
 
 
 
-export const createNotes = async (token,text) => {
+export const createNotes = async (req,res) => {
+    const { token, id, noteText } = req;
     try {
        const response = await axios.post(
            `${DB_DATA_URL}/notes.json?auth=${token}`,
-           {text: text}
+           { 
+            userId: id,
+            text: noteText
+           }
         );
-        return response;
+        return res.status(200).json(response);
 
     } catch (error) {
         console.log(error.response.data.error);
     }
 };
 
-export const getNotes = async (token) => {
+export const getNotes = async (req,res) => {
+    const { token, userId } = req;
+
     try {
         const response = await axios.get(`${DB_DATA_URL}/notes.json?auth=${token}`);
         const notes = [];
         for (const key in response.data) {
             const noteObj = {
                 id: key,
+                userId: response.data[key].userId,
                 text: response.data[key].text
             };
+            // if (noteObj.userId === userId) notes.push(noteObj);
             notes.push(noteObj);
         }
+        console.log("notes in the back", notes);
 
-        return notes;
- 
+        if (notes.length > 0 ) return res.status(200).json(notes);
      } catch (error) {
-        console.log(error.response.data.error);
+        console.log(error.message);
      }
 };
 

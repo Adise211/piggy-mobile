@@ -16,6 +16,7 @@ const Notes = () => {
     const [newNote,setNewNote] = useState(null);
     const authCtx = useContext(AuthContext);
     const token = authCtx.token;
+    const user = authCtx.userInfo;
 
     const onDelete = () => {
         setNoteText('');
@@ -23,7 +24,7 @@ const Notes = () => {
 
     const onSave = async () => {
         try {
-            const data  = await createNotes(token,noteText);
+            const data  = await createNotes({ token, id: user.localId, noteText });
             setNewNote(data.config.data)
             setNotes([...notes,newNote]);
 
@@ -74,7 +75,8 @@ const Notes = () => {
     useEffect(() => {
         const fetchTheNotes = async () => {
             try {
-                const result = await getNotes(token);
+                const result = await getNotes({ token, userId: user.localId });
+                console.log("result",result);
                 setNotes(result);
             } catch (error) {
                 console.log(error);
@@ -83,6 +85,8 @@ const Notes = () => {
         fetchTheNotes();
     },[token,notes])
 
+    console.log("notes",notes);
+    // console.log("user",user.localId);
     
     return (
         <View>
@@ -101,7 +105,7 @@ const Notes = () => {
                 <SaveButton style={styles.delete} onPress={onDelete}>Delete</SaveButton>
             </View>
             <View style={styles.notesContainer}>
-                { notes.length > 0 ? (
+                {/* { notes.length > 0 ? (
                     <FlatList 
                     data={notes}
                     renderItem={renderNotes}
@@ -109,9 +113,8 @@ const Notes = () => {
                 ) : (
                     <Text style={styles.noNotes}>No Notes Here.</Text>
                 )
-            }
-    
-            </View>
+                } */}
+           </View>
         </View>
     );
 };
