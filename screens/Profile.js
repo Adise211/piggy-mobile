@@ -24,12 +24,13 @@ const Profile = () => {
     const image = authCtx.imageUri;
 
     useEffect(() => {
+        setName('Adi');
         const userInfo = async () => {
             try {
                 const data = await getUserInfo(token);
                 setUser(data)
                 setEmail(data[0].email)
-                setName(data[0].displayName)
+                // setName(data[0].displayName)
                 setProfileImage(data[0].photoUrl)
                 
             } catch (error) {
@@ -38,6 +39,7 @@ const Profile = () => {
         };
         userInfo();
     }, [])
+
 
     const onEditProfile = () => {
         Alert.alert(
@@ -77,11 +79,12 @@ const Profile = () => {
 
  
     const logOutHandler = () => {
+        authCtx.userImage('');
         authCtx.logOut();
         navigation.navigate('SIGN-IN')
     };
 
-
+console.log("user",user[0].passwordHash);
 
     return (
         <View style={styles.container}>
@@ -93,14 +96,14 @@ const Profile = () => {
                 <ImagePicker title={profileImage ? 'change image': 'add image'} />
             </View>
             <View style={styles.settings}> 
-                { !editProfile ? (
+                { !editProfile && user ? (
                     <>
                         <Text style={styles.edit} onPress={onEditProfile}>Edit</Text>
                         <Text style={[styles.settingsTitle, {marginTop: 40}]}>Full Name</Text>                    
                         <Text style={styles.details}>{name}</Text>                
 
                         <Text style={[styles.settingsTitle, {marginTop: 40}]}>Email </Text>
-                        <Text style={styles.details}>{email}</Text>
+                        <Text style={styles.details}>{user[0].email}</Text>
                         {/* <Text style={styles.edit}>Edit</Text> */}
 
                         <Text style={[styles.settingsTitle, {marginTop: 40}]}>Password </Text>
