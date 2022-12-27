@@ -13,10 +13,10 @@ export const createNotes = async (req,res) => {
             text: noteText
            }
         );
-        return res.status(200).json(response);
+        return response;
 
     } catch (error) {
-        console.log(error.response.data.error);
+        console.log(error.message);
     }
 };
 
@@ -32,12 +32,11 @@ export const getNotes = async (req,res) => {
                 userId: response.data[key].userId,
                 text: response.data[key].text
             };
-            // if (noteObj.userId === userId) notes.push(noteObj);
-            notes.push(noteObj);
+            if (noteObj.userId === userId) notes.push(noteObj);
         }
-        console.log("notes in the back", notes);
 
-        if (notes.length > 0 ) return res.status(200).json(notes);
+        return notes;
+
      } catch (error) {
         console.log(error.message);
      }

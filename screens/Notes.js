@@ -11,7 +11,8 @@ import * as Haptics from 'expo-haptics';
 
 const Notes = () => {
     const [noteText,setNoteText] = useState('');
-    const [saved,setSaved] = useState(false);
+    const [saving,setSaving] = useState(false);
+    const [removing,setRemoving] = useState(false);
     const [notes,setNotes] = useState([]);
     const [newNote,setNewNote] = useState(null);
     const authCtx = useContext(AuthContext);
@@ -24,28 +25,36 @@ const Notes = () => {
 
     const onSave = async () => {
         try {
-            const data  = await createNotes({ token, id: user.localId, noteText });
-            setNewNote(data.config.data)
-            setNotes([...notes,newNote]);
+            if (noteText !== '') {
+                setSaving(true);
+                const data  = await createNotes({ token, id: user.localId, noteText });
+                Alert.alert('Saved Your Note', 'Your new note was saved');
+                setNewNote(data.config.data)
+                setNotes([...notes,newNote]);    
+            } else {
+                Alert.alert('Empty Note', 'Please add some text first!');
+            }
 
         } catch (error) {
             console.log(error);
         }
-        if (newNote !== '') {
-            Alert.alert('Saved Your Note', 'Your new note was saved')
-        }
-        setSaved(true);
+        
+        setSaving(false);
         setNoteText('');
     };
 
     const onDeleteNote = async (noteId) => {
         try {
+            setRemoving(true);
             const deleted = await deleteNote(token,noteId);
-            console.log("result of delete note",deleted);
+            Alert.alert(`${deleted.message}`)
         } catch (error) {
             console.log("my error",error);
         }
+
+        setRemoving(false);
     };
+
 
     const pressedNoteCard = (id) => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -76,17 +85,14 @@ const Notes = () => {
         const fetchTheNotes = async () => {
             try {
                 const result = await getNotes({ token, userId: user.localId });
-                console.log("result",result);
                 setNotes(result);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchTheNotes();
-    },[token,notes])
+    },[saving, removing])
 
-    console.log("notes",notes);
-    // console.log("user",user.localId);
     
     return (
         <View>
@@ -105,7 +111,7 @@ const Notes = () => {
                 <SaveButton style={styles.delete} onPress={onDelete}>Delete</SaveButton>
             </View>
             <View style={styles.notesContainer}>
-                {/* { notes.length > 0 ? (
+                { notes.length > 0 ? (
                     <FlatList 
                     data={notes}
                     renderItem={renderNotes}
@@ -113,7 +119,7 @@ const Notes = () => {
                 ) : (
                     <Text style={styles.noNotes}>No Notes Here.</Text>
                 )
-                } */}
+                }
            </View>
         </View>
     );
